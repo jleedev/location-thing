@@ -1,10 +1,13 @@
 package com.example.myproject;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationListener;
@@ -16,26 +19,33 @@ public class MyActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		final TextView textView = (TextView) findViewById(R.id.textview);
-		textView.setText("");
+
+		final ListView listView = (ListView) findViewById(R.id.listview);
+		final ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.listitem, new ArrayList<String>());
+		listView.setAdapter(listAdapter);
+
 		final LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		final LocationListener locationListener = new LocationListener() {
 
 			public void onLocationChanged(Location location) {
-				textView.append("Location " + location + "\n");
+				listAdapter.add("Location " + location + "\n");
+				listView.smoothScrollToPosition(listAdapter.getCount());
 			}
 
 			public void onProviderDisabled(String provider) {
-				textView.append("Disabled " + provider + "\n");
+				listAdapter.add("Disabled " + provider + "\n");
+				listView.smoothScrollToPosition(listAdapter.getCount());
 			}
 
 			public void onProviderEnabled(String provider) {
-				textView.append("Enabled " + provider + "\n");
+				listAdapter.add("Enabled " + provider + "\n");
+				listView.smoothScrollToPosition(listAdapter.getCount());
 			}
 
 			public void onStatusChanged(String provider, int status,
 					Bundle extras) {
-				textView.append("Changed " + provider + " " + status + "\n");
+				listAdapter.add("Changed " + provider + " " + status + "\n");
+				listView.smoothScrollToPosition(listAdapter.getCount());
 			}
 
 		};
