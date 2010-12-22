@@ -17,8 +17,9 @@ public class MyActivity extends Activity implements LocationListener {
 	ListView listView;
 	ArrayAdapter<String> listAdapter;
 	LocationManager locationManager;
-	Button button_start;
-	Button button_stop;
+
+	/** Whether the user wants to collect locations. */
+	boolean running = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -32,19 +33,25 @@ public class MyActivity extends Activity implements LocationListener {
 
 		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-		button_start = (Button) findViewById(R.id.button_start);
-		button_stop = (Button) findViewById(R.id.button_stop);
+		final Button button_start = (Button) findViewById(R.id.button_start);
+		final Button button_stop = (Button) findViewById(R.id.button_stop);
 		
 		button_stop.setEnabled(false);
 		
 		button_start.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				running = true;
+				button_start.setEnabled(false);
+				button_stop.setEnabled(true);
 				resumeUpdates();
 			}
 		});
 		
 		button_stop.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				running = false;
+				button_start.setEnabled(true);
+				button_stop.setEnabled(false);
 				pauseUpdates();
 			}
 		});
@@ -57,17 +64,14 @@ public class MyActivity extends Activity implements LocationListener {
 
 	public void pauseUpdates() {
 		locationManager.removeUpdates(this);
-		button_start.setEnabled(true);
-		button_stop.setEnabled(false);
 	}
 
 	public void resumeUpdates() {
+		if (!running) return;
 		locationManager.requestLocationUpdates(
 			LocationManager.GPS_PROVIDER, 0, 0, this);
 		locationManager.requestLocationUpdates(
 			LocationManager.NETWORK_PROVIDER, 0, 0, this);
-		button_start.setEnabled(false);
-		button_stop.setEnabled(true);
 	}
 
 	@Override
