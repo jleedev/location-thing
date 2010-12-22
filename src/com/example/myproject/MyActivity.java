@@ -21,7 +21,7 @@ public class MyActivity extends Activity {
 		setContentView(R.layout.main);
 
 		final ListView listView = (ListView) findViewById(R.id.listview);
-		final ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.listitem, new ArrayList<String>());
+		final ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, android.R.layout.test_list_item, new ArrayList<String>());
 		listView.setAdapter(listAdapter);
 
 		final LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
