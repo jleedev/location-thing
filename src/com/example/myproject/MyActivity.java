@@ -30,6 +30,7 @@ public class MyActivity extends Activity implements LocationListener {
 		listView = (ListView) findViewById(R.id.listview);
 		listAdapter = new ArrayAdapter<String>(this, android.R.layout.test_list_item, new ArrayList<String>());
 		listView.setAdapter(listAdapter);
+		listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
 		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -55,11 +56,6 @@ public class MyActivity extends Activity implements LocationListener {
 				pauseUpdates();
 			}
 		});
-	}
-
-	void append(String text) {
-		listAdapter.add(text);
-		listView.smoothScrollToPosition(listAdapter.getCount());
 	}
 
 	public void pauseUpdates() {
@@ -88,23 +84,23 @@ public class MyActivity extends Activity implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
-		append("Location " + location);
+		listAdapter.add("Location " + location);
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		append("Disabled " + provider);
+		listAdapter.add("Disabled " + provider);
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		append("Enabled " + provider);
+		listAdapter.add("Enabled " + provider);
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status,
 			Bundle extras) {
-		append("Changed " + provider + " " + status);
+		listAdapter.add("Changed " + provider + " " + status);
 	}
 
 }
