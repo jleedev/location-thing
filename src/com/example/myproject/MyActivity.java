@@ -71,6 +71,11 @@ public class MyActivity extends Activity implements LocationListener {
 	}
 
 	@Override
+	public void onBackPressed() {
+		moveTaskToBack(true);
+	}
+
+	@Override
 	public void onPause() {
 		super.onPause();
 		pauseUpdates();
