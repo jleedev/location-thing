@@ -7,16 +7,20 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MyActivity extends Activity implements LocationListener {
 
 	ListView listView;
 	ArrayAdapter<String> listAdapter;
 	LocationManager locationManager;
+	ClipboardManager clipboardManager;
 
 	/** Whether the user wants to collect locations. */
 	boolean running = false;
@@ -27,10 +31,22 @@ public class MyActivity extends Activity implements LocationListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+
 		listView = (ListView) findViewById(R.id.listview);
 		listAdapter = new ArrayAdapter<String>(this, android.R.layout.test_list_item, new ArrayList<String>());
 		listView.setAdapter(listAdapter);
 		listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				String item = (String) parent.getItemAtPosition(position);
+				clipboardManager.setText(item);
+				Toast toast = Toast.makeText(MyActivity.this, R.string.toast_copied, Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		});
 
 		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 

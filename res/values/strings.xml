@@ -3,4 +3,5 @@
 	<string name="app_name">MyProject</string>
 	<string name="button_start">Start</string>
 	<string name="button_stop">Stop</string>
+	<string name="toast_copied">Copied to clipboard</string>
 </resources>
