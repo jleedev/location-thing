@@ -3,14 +3,14 @@ package com.example.myproject;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.location.Location;
-import android.location.LocationManager;
-import android.location.LocationListener;
 
 public class MyActivity extends Activity implements LocationListener {
 
