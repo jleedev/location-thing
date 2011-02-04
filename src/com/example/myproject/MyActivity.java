@@ -52,10 +52,11 @@ public class MyActivity extends Activity implements LocationListener {
 
 		final Button button_start = (Button) findViewById(R.id.button_start);
 		final Button button_stop = (Button) findViewById(R.id.button_stop);
-		
+
 		button_stop.setEnabled(false);
-		
+
 		button_start.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				running = true;
 				button_start.setEnabled(false);
@@ -63,8 +64,9 @@ public class MyActivity extends Activity implements LocationListener {
 				resumeUpdates();
 			}
 		});
-		
+
 		button_stop.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				running = false;
 				button_start.setEnabled(true);
@@ -123,5 +125,4 @@ public class MyActivity extends Activity implements LocationListener {
 			Bundle extras) {
 		listAdapter.add("Changed " + provider + " " + status);
 	}
-
 }
