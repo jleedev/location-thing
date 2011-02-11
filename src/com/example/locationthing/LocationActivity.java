@@ -1,8 +1,8 @@
-package com.example.myproject;
+package com.example.locationthing;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MyActivity extends Activity implements LocationListener {
+public class LocationActivity extends ListActivity implements LocationListener {
 
 	ListView listView;
 	ArrayAdapter<String> listAdapter;
@@ -29,11 +29,13 @@ public class MyActivity extends Activity implements LocationListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		listView = getListView();
+
+		View toolbar = View.inflate(this, R.layout.main_toolbar, null);
+		listView.addHeaderView(toolbar);
 
 		clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
-		listView = (ListView) findViewById(R.id.listview);
 		listAdapter = new ArrayAdapter<String>(this, android.R.layout.test_list_item, new ArrayList<String>());
 		listView.setAdapter(listAdapter);
 		listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
@@ -43,7 +45,7 @@ public class MyActivity extends Activity implements LocationListener {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				String item = (String) parent.getItemAtPosition(position);
 				clipboardManager.setText(item);
-				Toast toast = Toast.makeText(MyActivity.this, R.string.toast_copied, Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(LocationActivity.this, R.string.toast_copied, Toast.LENGTH_SHORT);
 				toast.show();
 			}
 		});

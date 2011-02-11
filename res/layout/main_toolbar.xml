@@ -4,5 +4,4 @@
 		<Button android:text="@string/button_start" android:id="@+id/button_start" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 		<Button android:text="@string/button_stop" android:id="@+id/button_stop" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 	</LinearLayout>
-	<ListView android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/listview" />
 </LinearLayout>
