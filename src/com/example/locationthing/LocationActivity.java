@@ -29,10 +29,8 @@ public class LocationActivity extends ListActivity implements LocationListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 		listView = getListView();
-
-		View toolbar = View.inflate(this, R.layout.main_toolbar, null);
-		listView.addHeaderView(toolbar);
 
 		clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
