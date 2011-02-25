@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.location.Location;
+import android.location.GpsStatus;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
@@ -16,7 +17,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class LocationActivity extends ListActivity implements LocationListener {
+public class LocationActivity extends ListActivity implements LocationListener, GpsStatus.Listener {
 
 	ListView listView;
 	ArrayAdapter<String> listAdapter;
@@ -87,6 +88,7 @@ public class LocationActivity extends ListActivity implements LocationListener {
 			LocationManager.GPS_PROVIDER, 0, 0, this);
 		locationManager.requestLocationUpdates(
 			LocationManager.NETWORK_PROVIDER, 0, 0, this);
+		locationManager.addGpsStatusListener(this);
 	}
 
 	@Override
@@ -138,6 +140,25 @@ public class LocationActivity extends ListActivity implements LocationListener {
 		for (String key: extras.keySet()) {
 			Object obj = extras.get(key);
 			listAdapter.add(key + " -> " + obj);
+		}
+	}
+
+	@Override
+	public void onGpsStatusChanged(int event) {
+		GpsStatus status = locationManager.getGpsStatus(null);
+		switch (event) {
+		case GpsStatus.GPS_EVENT_STARTED:
+			listAdapter.add("GPS: Started");
+			break;
+		case GpsStatus.GPS_EVENT_STOPPED:
+			listAdapter.add("GPS: Stopped");
+			break;
+		case GpsStatus.GPS_EVENT_FIRST_FIX:
+			listAdapter.add("GPS: First fix in " + status.getTimeToFirstFix());
+			break;
+		case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+			//listAdapter.add("GPS: Satellite Status");
+			break;
 		}
 	}
 }
