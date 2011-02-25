@@ -6,6 +6,7 @@ import android.app.ListActivity;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.view.View;
@@ -123,6 +124,20 @@ public class LocationActivity extends ListActivity implements LocationListener {
 	@Override
 	public void onStatusChanged(String provider, int status,
 			Bundle extras) {
-		listAdapter.add("Changed " + provider + " " + status);
+		switch (status) {
+		case LocationProvider.OUT_OF_SERVICE:
+			listAdapter.add(provider + " is out of service");
+			break;
+		case LocationProvider.AVAILABLE:
+			listAdapter.add(provider + " is available");
+			break;
+		case LocationProvider.TEMPORARILY_UNAVAILABLE:
+			listAdapter.add(provider + " temporarily unavailable");
+		}
+
+		for (String key: extras.keySet()) {
+			Object obj = extras.get(key);
+			listAdapter.add(key + " -> " + obj);
+		}
 	}
 }
