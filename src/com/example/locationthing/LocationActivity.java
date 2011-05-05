@@ -79,11 +79,13 @@ public class LocationActivity extends ListActivity implements LocationListener, 
 	}
 
 	public void pauseUpdates() {
+		listAdapter.add("Pausing updates");
 		locationManager.removeUpdates(this);
 	}
 
 	public void resumeUpdates() {
 		if (!running) return;
+		listAdapter.add("Resuming updates");
 		locationManager.requestLocationUpdates(
 			LocationManager.GPS_PROVIDER, 0, 0, this);
 		locationManager.requestLocationUpdates(
