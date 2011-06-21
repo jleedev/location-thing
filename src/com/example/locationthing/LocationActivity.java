@@ -81,6 +81,7 @@ public class LocationActivity extends ListActivity implements LocationListener, 
 	public void pauseUpdates() {
 		listAdapter.add("Pausing updates");
 		locationManager.removeUpdates(this);
+		locationManager.removeGpsStatusListener(this);
 	}
 
 	public void resumeUpdates() {
